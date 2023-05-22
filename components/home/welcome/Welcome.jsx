@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { useState } from 'react'
 import styles from './welcome.style'
-import { View,FlatList,Image,Text,TextInput,TouchableOpacity, } from 'react-native'
+import { View,FlatList,Image,Text,TextInput,TouchableOpacity} from 'react-native'
 import { useRouter } from 'expo-router'
 import {icons,Images,SIZES} from '../../../constants'
 
