@@ -10,13 +10,27 @@ import useFetch from '../../hook/useFetch';
 const tabs = ['About','Qualifications','Resposibilities']
 const JobDetails = () => {
     const params = useSearchParams(); //get the id of the job using the search params
-    const router = useSearchRouter(); //initialize the router
+    const router = useRouter(); //initialize the router
     const [refreshing,setRefreshing] = useState(false);
     const [activeTab,setActiveTab] = useState(tabs[0]);
 
     const onRefresh =()=>{
 
     }
+
+    const displayContent =()=>{
+      switch(activeTab){
+        case "Qualifications":
+          return <Specifics title="Qualifications" points={data[0].job_highlights?.Qualifications ?? ['N/A']}/>
+        case "About":
+          return <JobAbout info={data[0].job_description ?? "No Data Provided"}/>
+        case "Responsibilities":
+          return <Specifics title="Responsibiliies" points={data[0].job_highlights?.Responsibilities ?? ['N/A']}/> 
+        default:
+          break;
+      }
+    }
+
     //destructure the ffg from the custom hook useFetch we created 
     const {data,isLoading,error,reFetch} = useFetch('job-details',{
         'job_id': params.id
@@ -46,6 +60,7 @@ const JobDetails = () => {
                        location={data[0].job_country}
               />
               <JobTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
+              {displayContent()}
 
             </View>
           )
@@ -53,6 +68,8 @@ const JobDetails = () => {
         }
 
         </ScrollView>
+        
+        <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results'}/>
     </>
     </SafeAreaView>
   )
